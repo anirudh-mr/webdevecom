@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipShop - Your Online Shopping Destination</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading FlipShop...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar container">
+            <div class="navbar-brand">
+                <i class="fas fa-shopping-bag"></i>
+                <span>FlipShop</span>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input form-control" placeholder="Search for products, brands and more...">
+                <button class="search-btn btn btn--primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="navbar-actions">
+                <button id="themeToggle" class="btn btn--outline">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-menu">
+                    <button id="loginBtn" class="btn btn--outline">Login</button>
+                    <div id="userDropdown" class="user-dropdown hidden">
+                        <span id="userName"></span>
+                        <div class="dropdown-menu">
+                            <a href="#" id="profileLink">Profile</a>
+                            <a href="#" id="ordersLink">Orders</a>
+                            <a href="#" id="adminLink" class="hidden">Admin Panel</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="cart-btn btn btn--outline">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" class="cart-count">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Homepage -->
+        <div id="homepage" class="page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Shop Smart, Live Better</h1>
+                        <p>Discover amazing deals on millions of products</p>
+                        <button class="btn btn--primary btn--lg">Start Shopping</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories-section">
+                <div class="container">
+                    <h2>Shop by Category</h2>
+                    <div id="categoriesGrid" class="categories-grid"></div>
+                </div>
+            </section>
+
+            <!-- Featured Products -->
+            <section class="featured-products">
+                <div class="container">
+                    <h2>Featured Products</h2>
+                    <div id="featuredProducts" class="products-grid"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Products Page -->
+        <div id="productsPage" class="page hidden">
+            <div class="container">
+                <div class="breadcrumb">
+                    <nav id="breadcrumbNav"></nav>
+                </div>
+                
+                <div class="products-layout">
+                    <aside class="filters-sidebar">
+                        <div class="filters-header">
+                            <h3>Filters</h3>
+                            <button id="clearFilters" class="btn btn--sm btn--outline">Clear All</button>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Price Range</h4>
+                            <div class="price-range">
+                                <input type="range" id="minPrice" min="0" max="2000" value="0" class="price-slider">
+                                <input type="range" id="maxPrice" min="0" max="2000" value="2000" class="price-slider">
+                                <div class="price-values">
+                                    <span>$<span id="minPriceValue">0</span></span>
+                                    <span>$<span id="maxPriceValue">2000</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Brand</h4>
+                            <div id="brandFilters" class="checkbox-filters"></div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Rating</h4>
+                            <div id="ratingFilters" class="checkbox-filters"></div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Availability</h4>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="inStockOnly"> In Stock Only
+                            </label>
+                        </div>
+                    </aside>
+
+                    <div class="products-content">
+                        <div class="products-header">
+                            <div class="results-info">
+                                <span id="resultsCount">0 products found</span>
+                            </div>
+                            <div class="sort-controls">
+                                <label>Sort by:</label>
+                                <select id="sortSelect" class="form-control">
+                                    <option value="relevance">Relevance</option>
+                                    <option value="price-low">Price: Low to High</option>
+                                    <option value="price-high">Price: High to Low</option>
+                                    <option value="rating">Rating</option>
+                                    <option value="newest">Newest</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="productsGrid" class="products-grid"></div>
+                        <div id="loadMoreContainer" class="load-more-container">
+                            <button id="loadMoreBtn" class="btn btn--outline">Load More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Detail Page -->
+        <div id="productDetailPage" class="page hidden">
+            <div class="container">
+                <div id="productDetail" class="product-detail"></div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cartPage" class="page hidden">
+            <div class="container">
+                <h1>Shopping Cart</h1>
+                <div class="cart-layout">
+                    <div class="cart-items">
+                        <div id="cartItems"></div>
+                    </div>
+                    <div class="cart-summary">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Order Summary</h3>
+                                <div class="summary-row">
+                                    <span>Items Total:</span>
+                                    <span id="itemsTotal">$0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Shipping:</span>
+                                    <span id="shippingCost">$9.99</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Tax:</span>
+                                    <span id="taxAmount">$0.00</span>
+                                </div>
+                                <hr>
+                                <div class="summary-row total">
+                                    <strong>Total: <span id="cartTotal">$0.00</span></strong>
+                                </div>
+                                <button id="checkoutBtn" class="btn btn--primary btn--full-width">
+                                    Proceed to Checkout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkoutPage" class="page hidden">
+            <div class="container">
+                <div class="checkout-steps">
+                    <div class="step active" data-step="1">
+                        <span>1</span> Shipping
+                    </div>
+                    <div class="step" data-step="2">
+                        <span>2</span> Payment
+                    </div>
+                    <div class="step" data-step="3">
+                        <span>3</span> Review
+                    </div>
+                </div>
+
+                <div class="checkout-content">
+                    <div id="checkoutStep1" class="checkout-step">
+                        <h2>Shipping Address</h2>
+                        <form id="shippingForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="shippingName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <input type="text" id="shippingAddress" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" id="shippingCity" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" id="shippingState" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ZIP Code</label>
+                                <input type="text" id="shippingZip" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn--primary">Continue to Payment</button>
+                        </form>
+                    </div>
+
+                    <div id="checkoutStep2" class="checkout-step hidden">
+                        <h2>Payment Method</h2>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="card" checked>
+                                <span>Credit/Debit Card</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="upi">
+                                <span>UPI</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="netbanking">
+                                <span>Net Banking</span>
+                            </label>
+                        </div>
+                        
+                        <div id="cardPayment" class="payment-form">
+                            <div class="form-group">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Expiry</label>
+                                    <input type="text" id="cardExpiry" class="form-control" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" id="cardCvv" class="form-control" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="continueToReview" class="btn btn--primary">Continue to Review</button>
+                    </div>
+
+                    <div id="checkoutStep3" class="checkout-step hidden">
+                        <h2>Order Review</h2>
+                        <div id="orderReview"></div>
+                        <button id="placeOrderBtn" class="btn btn--primary btn--lg">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Profile Page -->
+        <div id="profilePage" class="page hidden">
+            <div class="container">
+                <div class="profile-layout">
+                    <aside class="profile-sidebar">
+                        <div class="profile-menu">
+                            <a href="#" class="profile-menu-item active" data-tab="info">Profile Info</a>
+                            <a href="#" class="profile-menu-item" data-tab="orders">My Orders</a>
+                            <a href="#" class="profile-menu-item" data-tab="addresses">Addresses</a>
+                            <a href="#" class="profile-menu-item" data-tab="security">Security</a>
+                        </div>
+                    </aside>
+                    <div class="profile-content">
+                        <div id="profileInfo" class="profile-tab active">
+                            <h2>Profile Information</h2>
+                            <form id="profileForm">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" id="profileName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" id="profileEmail" class="form-control" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" id="profilePhone" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn--primary">Update Profile</button>
+                            </form>
+                        </div>
+                        <div id="profileOrders" class="profile-tab">
+                            <h2>My Orders</h2>
+                            <div id="ordersList"></div>
+                        </div>
+                        <div id="profileAddresses" class="profile-tab">
+                            <h2>Saved Addresses</h2>
+                            <div id="addressesList"></div>
+                        </div>
+                        <div id="profileSecurity" class="profile-tab">
+                            <h2>Security Settings</h2>
+                            <form id="passwordChangeForm">
+                                <div class="form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" id="currentPassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" id="newPassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn--primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminPage" class="page hidden">
+            <div class="container">
+                <div class="admin-header">
+                    <h1>Admin Dashboard</h1>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Total Products</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="totalOrders">0</h3>
+                            <p>Total Orders</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="totalRevenue">$0</h3>
+                            <p>Total Revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" data-tab="products">Products</button>
+                    <button class="admin-tab-btn" data-tab="orders">Orders</button>
+                    <button class="admin-tab-btn" data-tab="analytics">Analytics</button>
+                </div>
+
+                <div id="adminProducts" class="admin-tab-content active">
+                    <div class="admin-section-header">
+                        <h2>Product Management</h2>
+                        <button id="addProductBtn" class="btn btn--primary">Add Product</button>
+                    </div>
+                    <div id="adminProductsList"></div>
+                </div>
+
+                <div id="adminOrders" class="admin-tab-content">
+                    <h2>Order Management</h2>
+                    <div id="adminOrdersList"></div>
+                </div>
+
+                <div id="adminAnalytics" class="admin-tab-content">
+                    <h2>Sales Analytics</h2>
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <h3>Sales Overview</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login to Your Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="loginEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+                    <p><a href="#" id="forgotPassword">Forgot Password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="registerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="registerEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" id="registerPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="registerPassword" class="form-control" required>
+                        <small class="password-strength" id="passwordStrength"></small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" id="confirmRegisterPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Register</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" id="showLogin">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div id="otpModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Verify OTP</h2>
+            </div>
+            <div class="modal-body">
+                <p>Enter the OTP sent to your email</p>
+                <form id="otpForm">
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                    </div>
+                    <div class="otp-timer">
+                        Time remaining: <span id="otpTimer">60</span>s
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Verify</button>
+                    <button type="button" id="resendOtp" class="btn btn--outline btn--full-width" disabled>Resend OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addProductModal" class="modal hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>Add New Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" id="productName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select id="productCategory" class="form-control" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Brand</label>
+                        <input type="text" id="productBrand" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <input type="number" id="productPrice" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stock</label>
+                        <input type="number" id="productStock" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="productDescription" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image URL</label>
+                        <input type="url" id="productImage" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

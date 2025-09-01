@@ -1,0 +1,73 @@
+Folder/File,Description
+backend/,Root backend directory
+├── src/,Source code directory
+│   ├── controllers/,Request handlers (business logic)
+│   │   ├── authController.js,Authentication endpoints
+│   │   ├── userController.js,User management endpoints
+│   │   ├── productController.js,Product CRUD operations
+│   │   ├── cartController.js,Shopping cart operations
+│   │   ├── orderController.js,Order processing logic
+│   │   ├── paymentController.js,Payment processing
+│   │   └── adminController.js,Admin-only operations
+│   ├── models/,Database schemas/models
+│   │   ├── User.js,User account model
+│   │   ├── Product.js,Product catalog model
+│   │   ├── Category.js,Product category model
+│   │   ├── Cart.js,Shopping cart model
+│   │   ├── Order.js,Order transaction model
+│   │   ├── Payment.js,Payment record model
+│   │   └── Review.js,Product review model
+│   ├── routes/,API route definitions
+│   │   ├── authRoutes.js,Authentication routes
+│   │   ├── userRoutes.js,User profile routes
+│   │   ├── productRoutes.js,Product API routes
+│   │   ├── cartRoutes.js,Cart API routes
+│   │   ├── orderRoutes.js,Order API routes
+│   │   ├── paymentRoutes.js,Payment API routes
+│   │   └── adminRoutes.js,Admin panel routes
+│   ├── middleware/,Express middleware functions
+│   │   ├── authMiddleware.js,JWT token validation
+│   │   ├── adminMiddleware.js,Admin role verification
+│   │   ├── errorMiddleware.js,Global error handling
+│   │   ├── rateLimitMiddleware.js,Request rate limiting
+│   │   └── validationMiddleware.js,Input validation
+│   ├── services/,Business logic services
+│   │   ├── authService.js,Authentication utilities
+│   │   ├── emailService.js,Email sending service
+│   │   ├── smsService.js,SMS/OTP service
+│   │   ├── paymentService.js,Payment gateway integration
+│   │   ├── uploadService.js,File upload handling
+│   │   └── cacheService.js,Redis caching service
+│   ├── utils/,Utility functions
+│   │   ├── database.js,Database connection
+│   │   ├── validators.js,Input validation rules
+│   │   ├── helpers.js,Common helper functions
+│   │   ├── constants.js,Application constants
+│   │   ├── logger.js,Logging configuration
+│   │   └── encryption.js,Password hashing utilities
+│   ├── config/,Configuration files
+│   │   ├── database.js,Database configuration
+│   │   ├── server.js,Server settings
+│   │   ├── auth.js,JWT and session config
+│   │   ├── payment.js,Payment gateway config
+│   │   └── email.js,Email service config
+│   └── app.js,Express app setup
+├── tests/,Test files
+│   ├── unit/,Unit tests
+│   │   ├── auth.test.js,Authentication tests
+│   │   ├── product.test.js,Product logic tests
+│   │   └── cart.test.js,Cart functionality tests
+│   ├── integration/,Integration tests
+│   │   ├── api.test.js,API endpoint tests
+│   │   └── database.test.js,Database integration tests
+│   └── setup.js,Test environment setup
+├── uploads/,File upload directory
+│   └── products/,Product image uploads
+├── logs/,Application logs
+├── package.json,Dependencies definition
+├── package-lock.json,Lock file for dependencies
+├── .env,Environment variables
+├── .env.example,Environment template
+├── .gitignore,Git ignore rules
+├── server.js,Server entry point
+└── README.md,Project documentation

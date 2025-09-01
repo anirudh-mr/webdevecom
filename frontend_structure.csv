@@ -1,0 +1,79 @@
+Folder/File,Description
+frontend/,Root frontend directory
+├── public/,Static files served by the web server
+│   ├── index.html,Main HTML template
+│   └── favicon.ico,Website favicon
+├── src/,Source code directory
+│   ├── components/,Reusable UI components
+│   │   ├── common/,Common components used across the app
+│   │   │   ├── Header.jsx,Application header with navigation
+│   │   │   ├── Footer.jsx,Application footer
+│   │   │   ├── Loader.jsx,Loading spinner component
+│   │   │   └── Modal.jsx,Modal dialog component
+│   │   ├── auth/,Authentication related components
+│   │   │   ├── LoginForm.jsx,Login form component
+│   │   │   ├── RegisterForm.jsx,Registration form component
+│   │   │   └── OTPVerification.jsx,OTP verification component
+│   │   ├── product/,Product related components
+│   │   │   ├── ProductCard.jsx,Individual product display card
+│   │   │   ├── ProductList.jsx,Product listing with pagination
+│   │   │   ├── ProductFilter.jsx,Product filtering sidebar
+│   │   │   └── ProductSearch.jsx,Product search functionality
+│   │   ├── cart/,Shopping cart components
+│   │   │   ├── CartItem.jsx,Individual cart item display
+│   │   │   ├── CartSummary.jsx,Cart total and summary
+│   │   │   └── Checkout.jsx,Checkout process component
+│   │   └── admin/,Admin panel components
+│   │       ├── AdminSidebar.jsx,Admin navigation sidebar
+│   │       ├── ProductManagement.jsx,Product management interface
+│   │       └── OrderManagement.jsx,Order management interface
+│   ├── pages/,Full page components/views
+│   │   ├── Home.jsx,Homepage with featured products
+│   │   ├── ProductDetails.jsx,Individual product details page
+│   │   ├── Cart.jsx,Shopping cart page
+│   │   ├── Checkout.jsx,Checkout process page
+│   │   ├── Login.jsx,User login page
+│   │   ├── Register.jsx,User registration page
+│   │   ├── Profile.jsx,User profile management
+│   │   └── admin/,Admin panel pages
+│   │       ├── Dashboard.jsx,Admin dashboard with analytics
+│   │       ├── Products.jsx,Admin product management
+│   │       └── Orders.jsx,Admin order management
+│   ├── hooks/,Custom React hooks
+│   │   ├── useAuth.js,Authentication state management
+│   │   ├── useCart.js,Cart state management
+│   │   ├── useProducts.js,Product data fetching
+│   │   └── useLocalStorage.js,Local storage persistence
+│   ├── context/,React Context providers
+│   │   ├── AuthContext.js,Authentication context
+│   │   ├── CartContext.js,Shopping cart context
+│   │   └── ThemeContext.js,Theme/UI context
+│   ├── services/,API integration services
+│   │   ├── api.js,Base API configuration
+│   │   ├── authService.js,Authentication API calls
+│   │   ├── productService.js,Product API calls
+│   │   ├── cartService.js,Cart API calls
+│   │   └── paymentService.js,Payment processing APIs
+│   ├── utils/,Utility functions
+│   │   ├── constants.js,Application constants
+│   │   ├── helpers.js,Helper functions
+│   │   ├── validators.js,Form validation functions
+│   │   └── formatters.js,Data formatting utilities
+│   ├── assets/,Static assets
+│   │   ├── images/,Image files
+│   │   ├── icons/,SVG icons
+│   │   └── styles/,CSS stylesheets
+│   │       ├── globals.css,Global CSS styles
+│   │       └── variables.css,CSS custom properties
+│   ├── config/,Configuration files
+│   │   ├── constants.js,App-wide constants
+│   │   └── environment.js,Environment configuration
+│   ├── App.jsx,Main App component
+│   ├── App.css,App-level styles
+│   └── index.js,React entry point
+├── package.json,Dependencies definition
+├── package-lock.json,Lock file for dependencies
+├── .env,Environment variables
+├── .env.example,Environment variables template
+├── .gitignore,Git ignore rules
+└── README.md,Project documentation
